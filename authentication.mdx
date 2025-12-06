@@ -1,0 +1,127 @@
+---
+title: Authentication
+description: Learn how to authenticate and securely access NCERT Documentation API
+---
+
+## Authentication Overview
+
+Secure access to NCERT Documentation requires proper authentication. We use API keys and OAuth 2.0 for different integration scenarios, ensuring your educational content interactions remain protected.
+
+<Callout kind="danger">Always keep your API keys secure and never share them in public repositories or client-side code.</Callout>
+
+## API Key Authentication
+
+The most common authentication method is using API keys. You can obtain an API key from your dashboard after signing up.
+
+<Steps>
+  <Step title="Generate API Key" icon="key">
+    Log into your NCERT Documentation dashboard and navigate to the API Keys section.
+  </Step>
+  <Step title="Copy Key" icon="copy">
+    Copy the generated API key to your application configuration.
+  </Step>
+  <Step title="Include in Headers" icon="settings">
+    Include the key in the Authorization header of all API requests.
+  </Step>
+</Steps>
+
+### Example API Key Usage
+
+<Tabs>
+  <Tab title="JavaScript" icon="code">
+    ```javascript
+const headers = {
+  'Authorization': 'Bearer sk-1234567890abcdef',
+  'Content-Type': 'application/json'
+};
+
+fetch('/api/v1/textbooks', { headers })
+  .then(response => response.json())
+  .then(data => console.log(data));
+```
+  </Tab>
+  <Tab title="Python" icon="code">
+    ```python
+import requests
+
+headers = {
+    'Authorization': 'Bearer sk-1234567890abcdef',
+    'Content-Type': 'application/json'
+}
+
+response = requests.get('/api/v1/textbooks', headers=headers)
+print(response.json())
+```
+  </Tab>
+</Tabs>
+
+## OAuth 2.0 Integration
+
+For more advanced integrations, we support OAuth 2.0 flows including authorization code and client credentials grants.
+
+<Expandable title="OAuth 2.0 Setup" default-open="false">
+  To use OAuth 2.0, register your application in the developer portal to obtain client credentials. Then implement the appropriate grant flow based on your use case.
+</Expandable>
+
+## Security Best Practices
+
+<Callout kind="tip">Follow these security practices to protect your integration and user data.</Callout>
+
+<Columns cols={2}>
+  <Card title="Key Rotation" icon="refresh-cw" href="#key-rotation">
+    Regularly rotate your API keys to minimize security risks.
+  </Card>
+  <Card title="Environment Variables" icon="server" href="#env-vars">
+    Store API keys in environment variables, not in code.
+  </Card>
+</Columns>
+
+### Environment Variables
+
+Always use environment variables to store sensitive information:
+
+```bash
+export NCERT_API_KEY=sk-1234567890abcdef
+export NCERT_BASE_URL=https://api.ncert-docs.com
+```
+
+### Rate Limiting
+
+Our API implements rate limiting to prevent abuse. Monitor your usage and implement proper error handling.
+
+| Plan Type | Requests per Hour | Requests per Day |
+|-----------|-------------------|------------------|
+| Free | 100 | 1,000 |
+| Basic | 1,000 | 10,000 |
+| Pro | 10,000 | 100,000 |
+
+<ExpandableGroup>
+  <Expandable title="Handling Rate Limits" default-open="false">
+    When you exceed rate limits, the API returns a 429 status code. Implement exponential backoff and proper error handling in your application.
+  </Expandable>
+  <Expandable title="Monitoring Usage" default-open="false">
+    Use the dashboard to monitor your API usage and set up alerts for approaching limits.
+  </Expandable>
+</ExpandableGroup>
+
+## Troubleshooting Authentication Issues
+
+Common authentication problems and their solutions:
+
+<Steps>
+  <Step title="Check API Key" icon="search">
+    Verify your API key is correct and not expired.
+  </Step>
+  <Step title="Validate Headers" icon="check-circle">
+    Ensure the Authorization header is properly formatted.
+  </Step>
+  <Step title="Test Endpoint" icon="terminal">
+    Use a tool like curl to test your authentication.
+  </Step>
+</Steps>
+
+```bash
+curl -H "Authorization: Bearer sk-1234567890abcdef" \
+     -H "Content-Type: application/json" \
+     https://api.ncert-docs.com/api/v1/textbooks
+```

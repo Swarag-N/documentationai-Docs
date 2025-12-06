@@ -1,0 +1,174 @@
+---
+title: API Usage
+description: Comprehensive guide to using NCERT Documentation API for textbook interactions
+---
+
+## API Usage Fundamentals
+
+The NCERT Documentation API provides powerful endpoints for interacting with educational content. Learn how to query textbooks, ask questions, and retrieve contextual answers from NCERT curriculum.
+
+<Callout kind="info">All API requests require authentication using API keys or OAuth tokens.</Callout>
+
+## Core Endpoints
+
+Our API offers several core endpoints for different types of interactions:
+
+<Tabs>
+  <Tab title="Conversations" icon="message-square">
+    Start and manage conversations with textbook content.
+  </Tab>
+  <Tab title="Textbooks" icon="book-open">
+    Retrieve information about available textbooks and chapters.
+  </Tab>
+  <Tab title="Search" icon="search">
+    Search across textbook content for specific topics.
+  </Tab>
+</Tabs>
+
+## Starting a Conversation
+
+Use the conversations endpoint to initiate AI-powered discussions with textbook material.
+
+<Steps>
+  <Step title="Prepare Request" icon="edit">
+    Format your question and specify the textbook context.
+  </Step>
+  <Step title="Send Request" icon="send">
+    POST to the conversations endpoint with your parameters.
+  </Step>
+  <Step title="Process Response" icon="cpu">
+    Parse the AI-generated response and context.
+  </Step>
+</Steps>
+
+### Conversation Request Example
+
+<CodeGroup tabs="JavaScript,Python,cURL">
+  ```javascript
+const conversationRequest = {
+  textbook_id: 'physics-class-12',
+  chapter: 3,
+  question: 'Explain electromagnetic induction',
+  context: 'Include examples from daily life'
+};
+
+fetch('/api/v1/conversations', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_API_KEY'
+  },
+  body: JSON.stringify(conversationRequest)
+})
+.then(response => response.json())
+.then(data => console.log(data.answer));
+```
+  ```python
+import requests
+
+conversation_data = {
+    "textbook_id": "physics-class-12",
+    "chapter": 3,
+    "question": "Explain electromagnetic induction",
+    "context": "Include examples from daily life"
+}
+
+response = requests.post(
+    '/api/v1/conversations',
+    json=conversation_data,
+    headers={'Authorization': 'Bearer YOUR_API_KEY'}
+)
+
+print(response.json()['answer'])
+```
+  ```bash
+curl -X POST "/api/v1/conversations" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "textbook_id": "physics-class-12",
+    "chapter": 3,
+    "question": "Explain electromagnetic induction",
+    "context": "Include examples from daily life"
+  }'
+```
+</CodeGroup>
+
+## Textbook Information
+
+Retrieve details about available textbooks and their structure.
+
+<Expandable title="Textbook Metadata" default-open="false">
+  Each textbook object contains information about subjects, classes, chapters, and available content types.
+</Expandable>
+
+### Getting Textbook List
+
+```javascript
+fetch('/api/v1/textbooks', {
+  headers: { 'Authorization': 'Bearer YOUR_API_KEY' }
+})
+.then(response => response.json())
+.then(textbooks => {
+  console.log('Available textbooks:', textbooks);
+});
+```
+
+## Search Functionality
+
+Search across multiple textbooks for specific topics or keywords.
+
+<Callout kind="tip">Use specific keywords and subject terms for better search results.</Callout>
+
+### Search Parameters
+
+| Parameter | Type | Description | Required |
+|-----------|------|-------------|----------|
+| query | string | Search keywords | Yes |
+| subjects | array | Filter by subjects | No |
+| classes | array | Filter by class levels | No |
+| limit | number | Max results to return | No |
+
+<ExpandableGroup>
+  <Expandable title="Advanced Search Options" default-open="false">
+    Use filters for subjects, difficulty levels, and content types to narrow down search results.
+  </Expandable>
+  <Expandable title="Search Best Practices" default-open="false">
+    Include subject-specific terminology and use quotes for exact phrases in your search queries.
+  </Expandable>
+</ExpandableGroup>
+
+## Error Handling
+
+Implement proper error handling for robust API integration.
+
+<Steps>
+  <Step title="Check Status Codes" icon="alert-circle">
+    Handle different HTTP status codes appropriately.
+  </Step>
+  <Step title="Parse Error Messages" icon="message-square">
+    Extract meaningful error information from responses.
+  </Step>
+  <Step title="Implement Retries" icon="refresh-cw">
+    Add retry logic for transient failures.
+  </Step>
+</Steps>
+
+### Common Error Codes
+
+| Status Code | Description | Action |
+|-------------|-------------|--------|
+| 400 | Bad Request | Check request format |
+| 401 | Unauthorized | Verify API key |
+| 403 | Forbidden | Check permissions |
+| 404 | Not Found | Verify resource exists |
+| 429 | Too Many Requests | Implement rate limiting |
+| 500 | Internal Error | Retry with backoff |
+
+## Response Formats
+
+All API responses follow consistent JSON structure with metadata and content.
+
+<Expandable title="Response Structure" default-open="false">
+  Standard response includes status, data, and optional metadata fields for pagination and context.
+</Expandable>

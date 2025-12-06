@@ -1,0 +1,228 @@
+---
+title: Advanced Features
+description: Explore advanced capabilities of NCERT Documentation for enhanced educational experiences
+---
+
+## Advanced Features Overview
+
+NCERT Documentation offers powerful advanced features for educators, developers, and institutions looking to maximize the potential of AI-powered textbook interactions.
+
+<Callout kind="info">Advanced features require Pro or Enterprise plans. Contact our sales team for access.</Callout>
+
+## Custom Model Training
+
+Train specialized AI models tailored to specific educational domains or curriculum requirements.
+
+<Tabs>
+  <Tab title="Data Preparation" icon="database">
+    Prepare and upload training data from your educational content.
+  </Tab>
+  <Tab title="Model Training" icon="cpu">
+    Configure and initiate model training with custom parameters.
+  </Tab>
+  <Tab title="Deployment" icon="rocket">
+    Deploy your custom model for production use.
+  </Tab>
+</Tabs>
+
+### Training Data Format
+
+<Expandable title="Dataset Requirements" default-open="false">
+  Training datasets should include question-answer pairs, textbook excerpts, and context information in JSON format.
+</Expandable>
+
+```json
+[
+  {
+    "question": "What is photosynthesis?",
+    "answer": "Photosynthesis is the process by which plants convert light energy into chemical energy.",
+    "context": "Biology Chapter 6 - Life Processes",
+    "subject": "biology",
+    "class": 10
+  }
+]
+```
+
+## Batch Processing
+
+Process multiple questions simultaneously for efficient bulk operations.
+
+<Steps>
+  <Step title="Prepare Batch" icon="file-text">
+    Create a batch file with multiple questions and contexts.
+  </Step>
+  <Step title="Submit Batch" icon="upload">
+    Submit the batch to our processing endpoint.
+  </Step>
+  <Step title="Monitor Progress" icon="bar-chart">
+    Track batch processing status and retrieve results.
+  </Step>
+  <Step title="Download Results" icon="download">
+    Download completed batch results in your preferred format.
+  </Step>
+</Steps>
+
+### Batch API Example
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+const batchData = {
+  requests: [
+    {
+      textbook_id: 'math-class-10',
+      chapter: 2,
+      question: 'Solve: 2x + 3 = 7'
+    },
+    {
+      textbook_id: 'physics-class-12',
+      chapter: 4,
+      question: 'Explain Newtons laws'
+    }
+  ]
+};
+
+fetch('/api/v1/batch', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_API_KEY'
+  },
+  body: JSON.stringify(batchData)
+})
+.then(response => response.json())
+.then(batch => {
+  console.log('Batch ID:', batch.id);
+});
+```
+  ```python
+import requests
+
+batch_data = {
+    "requests": [
+        {
+            "textbook_id": "math-class-10",
+            "chapter": 2,
+            "question": "Solve: 2x + 3 = 7"
+        },
+        {
+            "textbook_id": "physics-class-12",
+            "chapter": 4,
+            "question": "Explain Newtons laws"
+        }
+    ]
+}
+
+response = requests.post(
+    '/api/v1/batch',
+    json=batch_data,
+    headers={'Authorization': 'Bearer YOUR_API_KEY'}
+)
+
+print('Batch ID:', response.json()['id'])
+```
+</CodeGroup>
+
+## Analytics and Insights
+
+Gain deep insights into student learning patterns and content effectiveness.
+
+<Columns cols={2}>
+  <Card title="Usage Analytics" icon="bar-chart" href="#usage-analytics">
+    Track API usage, popular topics, and engagement metrics.
+  </Card>
+  <Card title="Learning Insights" icon="brain" href="#learning-insights">
+    Analyze student comprehension and knowledge gaps.
+  </Card>
+</Columns>
+
+### Analytics Dashboard
+
+Access comprehensive analytics through our dashboard or API endpoints.
+
+| Metric | Description | API Endpoint |
+|--------|-------------|--------------|
+| Question Volume | Total questions asked | /api/v1/analytics/questions |
+| Response Accuracy | AI answer quality scores | /api/v1/analytics/accuracy |
+| Topic Popularity | Most queried subjects | /api/v1/analytics/topics |
+| User Engagement | Session duration and frequency | /api/v1/analytics/engagement |
+
+<ExpandableGroup>
+  <Expandable title="Custom Reports" default-open="false">
+    Generate custom reports with filters for specific time periods, subjects, or user groups.
+  </Expandable>
+  <Expandable title="Data Export" default-open="false">
+    Export analytics data in CSV, JSON, or PDF formats for further analysis.
+  </Expandable>
+</ExpandableGroup>
+
+## Content Moderation
+
+Advanced content filtering and moderation capabilities for educational environments.
+
+<Callout kind="danger">Content moderation helps maintain appropriate educational content and prevents misuse.</Callout>
+
+### Moderation Features
+
+<Tabs>
+  <Tab title="Keyword Filtering" icon="filter">
+    Filter out inappropriate content based on keyword lists.
+  </Tab>
+  <Tab title="Context Analysis" icon="search">
+    Analyze conversation context for educational relevance.
+  </Tab>
+  <Tab title="Manual Review" icon="eye">
+    Human review queue for flagged content.
+  </Tab>
+</Tabs>
+
+## Multi-Language Support
+
+Support for multiple Indian languages beyond English.
+
+<Expandable title="Language Configuration" default-open="false">
+  Configure language preferences for both input questions and AI responses.
+</Expandable>
+
+### Supported Languages
+
+| Language | Code | Status |
+|----------|------|--------|
+| English | en | Full Support |
+| Hindi | hi | Full Support |
+| Bengali | bn | Beta |
+| Tamil | ta | Beta |
+| Telugu | te | Beta |
+| Marathi | mr | Coming Soon |
+
+## API Rate Limiting
+
+Advanced rate limiting with burst capacity and gradual refill.
+
+<Expandable title="Rate Limit Configuration" default-open="false">
+  Configure custom rate limits based on your usage patterns and requirements.
+</Expandable>
+
+### Rate Limit Headers
+
+```http
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 950
+X-RateLimit-Reset: 1640995200
+X-RateLimit-Burst: 100
+```
+
+## Enterprise Features
+
+Additional capabilities for large-scale educational deployments.
+
+<Steps>
+  <Step title="Dedicated Infrastructure" icon="server">
+    Deploy on dedicated infrastructure for enhanced performance.
+  </Step>
+  <Step title="Custom Integrations" icon="plug">
+    Build custom integrations with your existing systems.
+  </Step>
+  <Step title="Priority Support" icon="headphones">
+    Access 24/7 priority support and dedicated account management.
+  </Step>
+</Steps>

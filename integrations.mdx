@@ -1,0 +1,185 @@
+---
+title: Integrations
+description: Learn how to integrate NCERT Documentation with educational platforms and applications
+---
+
+## Integration Overview
+
+NCERT Documentation offers flexible integration options for various educational platforms, learning management systems, and custom applications. Our APIs are designed to seamlessly connect with existing educational workflows.
+
+<Callout kind="info">We provide SDKs for popular programming languages and detailed documentation for custom integrations.</Callout>
+
+## Platform Integrations
+
+We support integration with major educational platforms:
+
+<Columns cols={3}>
+  <Card title="Moodle" icon="school" href="#moodle-integration">
+    Integrate with Moodle LMS for enhanced learning experiences.
+  </Card>
+  <Card title="Canvas" icon="layout" href="#canvas-integration">
+    Connect with Canvas for interactive textbook conversations.
+  </Card>
+  <Card title="Custom Apps" icon="code" href="#custom-integration">
+    Build custom integrations for specialized educational needs.
+  </Card>
+</Columns>
+
+## Moodle Integration
+
+<Tabs>
+  <Tab title="Plugin Installation" icon="download">
+    Install our Moodle plugin from the official repository.
+  </Tab>
+  <Tab title="Configuration" icon="settings">
+    Configure API keys and textbook mappings in Moodle admin.
+  </Tab>
+  <Tab title="Usage" icon="play">
+    Enable textbook chat features in courses.
+  </Tab>
+</Tabs>
+
+### Moodle Setup Steps
+
+<Steps>
+  <Step title="Download Plugin" icon="download">
+    Download the NCERT Documentation plugin from Moodle plugins directory.
+  </Step>
+  <Step title="Install Plugin" icon="package">
+    Upload and install the plugin through Moodle's plugin manager.
+  </Step>
+  <Step title="Configure Settings" icon="settings">
+    Enter your API key and configure textbook associations.
+  </Step>
+  <Step title="Test Integration" icon="check-circle">
+    Test the integration by asking questions in a course.
+  </Step>
+</Steps>
+
+## Canvas Integration
+
+Our Canvas integration provides seamless textbook interaction within the Canvas learning environment.
+
+<Expandable title="Canvas LTI Setup" default-open="false">
+  Use Learning Tools Interoperability (LTI) to integrate NCERT Documentation as an external tool in Canvas courses.
+</Expandable>
+
+### Canvas Configuration
+
+```xml
+<!-- Example LTI configuration -->
+<cartridge_basiclti_link xmlns="http://www.imsglobal.org/xsd/imslticc_v1p0"
+    xmlns:blti = "http://www.imsglobal.org/xsd/imsbasiclti_v1p0"
+    xmlns:lticm ="http://www.imsglobal.org/xsd/imslticm_v1p0"
+    xmlns:lticp ="http://www.imsglobal.org/xsd/imslticp_v1p0"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation = "http://www.imsglobal.org/xsd/imslticc_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticc_v1p0.xsd http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0.xsd http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
+  <blti:title>NCERT Documentation</blti:title>
+  <blti:description>Talk to your textbooks with AI</blti:description>
+  <blti:launch_url>https://api.ncert-docs.com/lti/launch</blti:launch_url>
+  <blti:secure_launch_url>https://api.ncert-docs.com/lti/launch</blti:secure_launch_url>
+</cartridge_basiclti_link>
+```
+
+## Custom Application Integration
+
+For custom applications, we provide comprehensive SDKs and REST APIs.
+
+<CodeGroup tabs="JavaScript,Python,Java">
+  ```javascript
+// JavaScript SDK Example
+const { NCERTClient } = require('ncert-docs-sdk');
+
+const client = new NCERTClient({
+  apiKey: 'your-api-key',
+  baseUrl: 'https://api.ncert-docs.com'
+});
+
+// Ask a question
+const answer = await client.askQuestion({
+  textbookId: 'math-class-10',
+  chapter: 5,
+  question: 'Solve quadratic equation x² + 5x + 6 = 0'
+});
+
+console.log(answer);
+```
+  ```python
+from ncert_docs_sdk import NCERTClient
+
+client = NCERTClient(
+    api_key='your-api-key',
+    base_url='https://api.ncert-docs.com'
+)
+
+# Ask a question
+answer = client.ask_question(
+    textbook_id='math-class-10',
+    chapter=5,
+    question='Solve quadratic equation x² + 5x + 6 = 0'
+)
+
+print(answer)
+```
+  ```java
+import com.ncertdocs.sdk.NCERTClient;
+
+NCERTClient client = new NCERTClient.Builder()
+    .apiKey("your-api-key")
+    .baseUrl("https://api.ncert-docs.com")
+    .build();
+
+// Ask a question
+String answer = client.askQuestion(
+    "math-class-10",
+    5,
+    "Solve quadratic equation x² + 5x + 6 = 0"
+);
+
+System.out.println(answer);
+```
+</CodeGroup>
+
+## Webhook Integrations
+
+Set up webhooks to receive real-time notifications about student interactions.
+
+<Expandable title="Webhook Configuration" default-open="false">
+  Configure webhook endpoints in your dashboard to receive events like conversation starts, completions, and error notifications.
+</Expandable>
+
+### Webhook Events
+
+| Event Type | Description | Payload |
+|------------|-------------|---------|
+| conversation.started | New conversation initiated | User ID, textbook info |
+| conversation.completed | Conversation finished | Full conversation data |
+| error.occurred | API error encountered | Error details |
+| usage.threshold | Usage limit approached | Current usage stats |
+
+<ExpandableGroup>
+  <Expandable title="Webhook Security" default-open="false">
+    All webhook requests include signature headers for verification. Always validate webhook signatures to ensure authenticity.
+  </Expandable>
+  <Expandable title="Retry Logic" default-open="false">
+    Implement retry logic for failed webhook deliveries and handle duplicate events gracefully.
+  </Expandable>
+</ExpandableGroup>
+
+## Single Sign-On (SSO)
+
+Integrate with your existing authentication systems using SAML or OAuth.
+
+<Callout kind="tip">SSO integration provides seamless user experience across your educational platform.</Callout>
+
+<Steps>
+  <Step title="Choose Protocol" icon="settings">
+    Select SAML 2.0 or OAuth 2.0 based on your infrastructure.
+  </Step>
+  <Step title="Configure Identity Provider" icon="user-check">
+    Set up your IdP with NCERT Documentation as a service provider.
+  </Step>
+  <Step title="Test Integration" icon="check-circle">
+    Verify SSO login flow works correctly.
+  </Step>
+</Steps>

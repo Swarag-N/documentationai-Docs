@@ -1,0 +1,190 @@
+openapi: '3.0.0'
+info:
+  version: 1.0.0
+  title: NCERT Documentation API
+  license:
+    name: MIT
+servers:
+  - url: https://api.ncert-docs.com/v1
+paths:
+  /textbooks:
+    get:
+      summary: List all available textbooks in the NCERT curriculum
+      operationId: listTextbooks
+      parameters:
+        - name: subject
+          in: query
+          description: Filter textbooks by subject (math, science, social-studies, etc.)
+          required: false
+          schema:
+            type: string
+        - name: class
+          in: query
+          description: Filter textbooks by class level (1-12)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: A paginated array of textbooks with metadata including subjects, chapters, and content availability
+          headers:
+            x-next:
+              description: A link to the next page of textbooks
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+        default:
+          description: Unexpected error occurred while retrieving textbooks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new custom textbook entry for institutional use
+      operationId: createTextbook
+      responses:
+        201:
+          description: Textbook created successfully with assigned ID
+        default:
+          description: Unexpected error occurred during textbook creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /textbooks/{textbookId}:
+    get:
+      summary: Retrieve detailed information about a specific textbook including chapters and content structure
+      operationId: getTextbook
+      parameters:
+        - name: textbookId
+          in: path
+          required: true
+          description: The unique identifier of the textbook to retrieve
+          schema:
+            type: string
+      responses:
+        200:
+          description: Detailed textbook information including chapter list and metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Textbooks'
+        default:
+          description: Unexpected error occurred while retrieving textbook details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /conversations:
+    post:
+      summary: Initiate a new AI-powered conversation with textbook content using natural language questions
+      operationId: startConversation
+      responses:
+        201:
+          description: Conversation started successfully with initial AI response
+        default:
+          description: Unexpected error occurred while starting the conversation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /search:
+    get:
+      summary: Search across all NCERT textbooks for specific topics, keywords, or concepts
+      operationId: searchContent
+      parameters:
+        - name: query
+          in: query
+          description: Search query with keywords or phrases related to textbook content
+          required: true
+          schema:
+            type: string
+        - name: subject
+          in: query
+          description: Limit search to specific subject area
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of search results to return (default 20, max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        200:
+          description: Search results with relevant textbook excerpts, chapter references, and relevance scores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+        default:
+          description: Unexpected error occurred during content search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Textbook:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the textbook
+        name:
+          type: string
+          description: Full name of the textbook
+        subject:
+          type: string
+          description: Subject area (mathematics, physics, chemistry, biology, etc.)
+        class:
+          type: integer
+          description: Class level (1-12)
+        chapters:
+          type: integer
+          description: Total number of chapters in the textbook
+        language:
+          type: string
+          description: Primary language of the textbook content
+    Textbooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/Textbook'
+    SearchResult:
+      required:
+        - textbook_id
+        - chapter
+        - excerpt
+        - relevance
+      properties:
+        textbook_id:
+          type: string
+        chapter:
+          type: integer
+        excerpt:
+          type: string
+        relevance:
+          type: number
+          format: float
+    SearchResults:
+      type: array
+      items:
+        $ref: '#/components/schemas/SearchResult'
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

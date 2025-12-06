@@ -1,0 +1,105 @@
+---
+title: Introduction
+description: Overview of NCERT Documentation and its core capabilities for talking to textbooks
+---
+
+## Getting Started with NCERT Documentation
+
+NCERT Documentation provides an innovative way to interact with educational content through AI-powered textbook conversations. Our platform enables students and educators to ask questions about textbook material and receive contextual, accurate responses based on NCERT curriculum.
+
+<Columns cols={3}>
+  <Card title="Quick Start" icon="zap" href="/getting-started/quick-start">
+    Get up and running in minutes with our step-by-step setup guide.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference">
+    Explore our comprehensive API for integrating textbook interactions.
+  </Card>
+  <Card title="Authentication" icon="key" href="/authentication">
+    Learn how to securely authenticate and access our services.
+  </Card>
+</Columns>
+
+## Key Features
+
+Our platform offers several powerful features designed to enhance educational experiences:
+
+<Tabs>
+  <Tab title="Conversational AI" icon="message-square">
+    Engage in natural conversations with textbook content using advanced AI models.
+  </Tab>
+  <Tab title="Multi-Subject Support" icon="book-open">
+    Access NCERT textbooks across various subjects including mathematics, science, and social studies.
+  </Tab>
+  <Tab title="Context-Aware Responses" icon="brain">
+    Receive answers that consider chapter context, definitions, and related concepts.
+  </Tab>
+</Tabs>
+
+## Why Choose NCERT Documentation?
+
+<Callout kind="info">Our platform is specifically designed for the Indian education system, ensuring alignment with CBSE curriculum standards.</Callout>
+
+<Steps>
+  <Step title="Sign Up" icon="user-plus">
+    Create your account and choose your subscription plan.
+  </Step>
+  <Step title="Connect" icon="link">
+    Integrate our API with your educational platform or application.
+  </Step>
+  <Step title="Ask Questions" icon="message-circle">
+    Start conversing with textbook content in natural language.
+  </Step>
+  <Step title="Get Insights" icon="bar-chart">
+    Analyze student interactions and learning patterns.
+  </Step>
+</Steps>
+
+## Code Example
+
+Here's a simple example of how to start a conversation with a textbook chapter:
+
+```javascript
+const response = await fetch('/api/v1/conversations', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer YOUR_API_KEY'
+  },
+  body: JSON.stringify({
+    textbook_id: 'math-class-10',
+    chapter: 5,
+    question: 'Explain Pythagoras theorem'
+  })
+});
+
+const data = await response.json();
+console.log(data.answer);
+```
+
+## Supported Content Types
+
+Our platform supports various educational content formats:
+
+| Content Type | Description | Examples |
+|--------------|-------------|----------|
+| Text Chapters | Full textbook chapters | Mathematics, Physics |
+| Diagrams | Visual explanations | Geometric figures, circuit diagrams |
+| Exercises | Practice problems | MCQs, numerical problems |
+| Solutions | Step-by-step answers | Worked examples |
+
+<Expandable title="Advanced Integration Options" default-open="false">
+  For advanced users, we offer webhook integrations, batch processing, and custom model training options to tailor the platform to your specific educational needs.
+</Expandable>
+
+## Getting Help
+
+If you need assistance, our comprehensive documentation covers everything from basic setup to advanced features. Check out our API reference for detailed endpoint information and example requests.
+
+<ExpandableGroup>
+  <Expandable title="Common Setup Issues" default-open="false">
+    Troubleshoot authentication problems, API key configuration, and integration challenges.
+  </Expandable>
+  <Expandable title="API Limits and Quotas" default-open="false">
+    Understand rate limits, request quotas, and how to manage usage for optimal performance.
+  </Expandable>
+</ExpandableGroup>
